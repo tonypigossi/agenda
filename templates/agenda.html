@@ -2,10 +2,30 @@
 
 {% block content %}
     <h2>Agendamentos</h2>
-        <ul style="font-size: 18px;">
-            {% for evento in eventos %}
-            <li>{{ evento.titulo }} - {{ evento.get_data_evento }}</li>
-            {% endfor %}
-
-        </ul>
+    <a href="{% url 'evento' %}">
+        <button type="button" class="btn btn-primary btn-sm" name="btnNovoEvento">Novo evento</button>
+    </a>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Evento</th>
+          <th scope="col">Data</th>
+          <th scope="col">Opções</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for evento in eventos %}
+        <tr>
+          <th scope="row">{{ evento.id }}</th>
+          <td>{{ evento.titulo }} </td>
+          <td>{{ evento.get_data_evento }}</td>
+          <td>
+              <a href="evento/?id_evento={{ evento.id }}" class="btn btn-primary btn-sm">Editar</a>
+              <a href="{% url 'delete_Evento' evento.id %}" class="btn btn-danger btn-sm">Deletar</a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
 {% endblock %}

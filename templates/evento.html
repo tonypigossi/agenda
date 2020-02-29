@@ -6,19 +6,19 @@
         {% csrf_token %}
         <div class="form-group">
             <label for="titulo_evento">Titulo</label>
-            <input type="text" class="form-control" name="titulo_evento" placeholder="Título" required>
+            <input type="text" class="form-control" name="titulo_evento" placeholder="Título" value="{{ evento.titulo }}" required>
         </div>
         <div class="form-group">
             <label for="descricao_evento">Descrição</label>
-            <textarea class="form-control" name="descricao_evento" rows="3"></textarea>
+            <textarea class="form-control" name="descricao_evento" rows="3">{{ evento.descricao }}</textarea>
         </div>
         <div class="form-group">
-            <label for="localEvento_evento">Locao do evento</label>
-            <input type="text" class="form-control" name="local_evento" placeholder="Local do evento">
+            <label for="localEvento_evento">Local do evento</label>
+            <input type="text" class="form-control" name="local_evento" placeholder="Local do evento" value="{{ evento.local_evento }}">
         </div>
         <div class="form-group">
-            <label for="dataEvento_evento">Data</label>
-            <input type="datetime-local" class="form-control" name="data_evento" required>
+            <label for="data_evento">Data</label>
+            <input type="datetime-local" class="form-control" name="data_evento" required value="{{ evento.get_data_evento_input }}">
         </div>
         <input type="submit" value="Salvar">
     </form>
