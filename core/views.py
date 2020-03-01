@@ -2,8 +2,10 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
+from datetime import datetime, timedelta
 from core import models
 from core import forms
+from django.http.response import Http404
 
 
 def GetEventoLocal(request, titulo_evento):
@@ -13,9 +15,11 @@ def GetEventoLocal(request, titulo_evento):
 
 
 @login_required()
-def lista_eventos(request):
+def eventos_lista(request):
     usuario = request.user
-    eventos = models.Evento.objects.filter(usuario=usuario)
+    current_date = datetime.now() - timedelta(hours=1)
+    eventos = models.Evento.objects.filter(usuario=usuario,
+                                           data_evento__gt=current_date)
     data = {'eventos': eventos}
     return render(request, 'agenda.html', data)
 
@@ -46,10 +50,12 @@ def evento_update(request, id_evento):
         else:
             data = {}
             data['evento'] = models.Evento.objects.get(id=id_evento)
-            return render(request, 'evento.html', data)
+            if request.user == data['evento'].usuario:
+                return render(request, 'evento.html', data)
+            else:
+                raise
     except Exception as e:
-        mensagem = str(e)
-        print(mensagem)
+        raise Http404
     else:
         mensagem = 'Salvo som sucesso!'
 
@@ -69,9 +75,14 @@ def evento_create(request):
 
 @login_required()
 def evento_delete(request, id_evento):
-    usuario = request.user
-    evento = models.Evento.objects.get(id=id_evento)
-    if usuario == evento.usuario:
-        models.Evento.objects.filter(id=id_evento).delete()
-
-    return redirect('agenda')
+    try:
+        usuario = request.user
+        evento = models.Evento.objects.get(id=id_evento)
+        if usuario == evento.usuario:
+            models.Evento.objects.filter(id=id_evento).delete()
+        else:
+            raise
+    except:
+        raise Http404
+    else:
+        return redirect('/')

@@ -16,8 +16,8 @@
       </thead>
       <tbody>
         {% for evento in eventos %}
-        <tr>
-          <th scope="row">{{ evento.id }}</th>
+        <tr {% if evento.get_data_evento_atrasado %} class="p-3 mb-2 bg-danger text-white" {% endif %}>
+          <th>{{ evento.id }}</th>
           <td>{{ evento.titulo }} </td>
           <td>{{ evento.get_data_evento }}</td>
           <td>
