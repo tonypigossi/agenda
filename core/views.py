@@ -20,7 +20,9 @@ def eventos_lista(request):
     current_date = datetime.now() - timedelta(hours=1)
     eventos = models.Evento.objects.filter(usuario=usuario,
                                            data_evento__gt=current_date)
-    data = {'eventos': eventos}
+    data = {}
+    data['eventos'] = eventos
+    data['activeHome'] = 'active'
     return render(request, 'agenda.html', data)
 
 
@@ -50,6 +52,7 @@ def evento_update(request, id_evento):
         else:
             data = {}
             data['evento'] = models.Evento.objects.get(id=id_evento)
+            data['activeCadEvento'] = 'active'
             if request.user == data['evento'].usuario:
                 return render(request, 'evento.html', data)
             else:
@@ -63,11 +66,13 @@ def evento_update(request, id_evento):
 @login_required()
 def evento_create(request):
     try:
-        if request.method == 'POST':
+        if request.method == 'POST':            
             __get_data_evento(request).save()
             return redirect('agenda')
         else:
-            return render(request, 'evento.html')
+            data = {}
+            data['activeCadEvento'] = 'active'
+            return render(request, 'evento.html', data)
     except Exception as e:
         mensagem = str(e)
     else:

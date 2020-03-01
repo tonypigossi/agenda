@@ -1,28 +1,31 @@
 {% extends 'model-page.html' %}
-
 {% block content %}
     <h2>Agendamentos</h2>
-    <a href="{% url 'evento_create' %}" class="btn btn-primary btn-sm">
-        Novo Evento
-    </a>
-    <table class="table">
+    
+    <table class="table table-hover">
       <thead>
         <tr>
           <th scope="col">ID</th>
           <th scope="col">Evento</th>
+          <th scope="col">Descrição</th>
+          <th scope="col">Local</th>
           <th scope="col">Data</th>
           <th scope="col">Opções</th>
         </tr>
       </thead>
       <tbody>
         {% for evento in eventos %}
-        <tr {% if evento.get_data_evento_atrasado %} class="p-3 mb-2 bg-danger text-white" {% endif %}>
+          <tr {% if evento.get_data_evento_atrasado %} class="p-3 mb-2 bg-danger text-white" {% endif %}>
           <th>{{ evento.id }}</th>
           <td>{{ evento.titulo }} </td>
+          <td>{{ evento.descricao }} </td>
+          <td>{{ evento.local_evento }} </td>
           <td>{{ evento.get_data_evento }}</td>
           <td>
-              <a href="{% url 'evento_update' evento.id %}" class="btn btn-primary btn-sm">Editar</a>
-              <a href="{% url 'evento_delete' evento.id %}" class="btn btn-danger btn-sm">Deletar</a>
+              <div class="btn-group" role="group" aria-label="Opções">
+                  <a href="{% url 'evento_update' evento.id %}" class="btn btn-primary btn-sm">Editar</a>
+                  <a href="{% url 'evento_delete' evento.id %}" class="btn btn-danger btn-sm">Deletar</a>
+              </div>
           </td>
         </tr>
         {% endfor %}
