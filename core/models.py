@@ -16,7 +16,7 @@ class Evento(models.Model):
                                     verbose_name='Local do evento'
                                     )
     data_evento = models.DateTimeField(verbose_name='Data do eventos')
-    data_cricao = models.DateTimeField(auto_now=True,
+    data_create = models.DateTimeField(auto_now=True,
                                        verbose_name='Data da criação')
     usuario = models.ForeignKey(User, on_delete=models.CASCADE)
 
@@ -34,4 +34,3 @@ class Evento(models.Model):
 
     def get_data_evento_atrasado(self):
         return self.data_evento < datetime.now()
-        

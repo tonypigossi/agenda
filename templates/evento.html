@@ -1,11 +1,11 @@
 {% extends 'model-page.html' %}
 
 {% block content %}
-<div class="container col-md-6">
+<div class="container col-md-6 float-left">
     <form method="POST">
         {% csrf_token %}
         <div class="form-group">
-            <label for="titulo_evento">Titulo</label>
+            <label for="titulo_evento">Título</label>
             <input id="titulo_evento" type="text" class="form-control" name="titulo_evento" placeholder="Título" value="{{ evento.titulo }}" required>
         </div>
         <div class="form-group">
@@ -17,15 +17,14 @@
             <input id="localEvento_evento" type="text" class="form-control" name="local_evento" placeholder="Local do evento" value="{{ evento.local_evento }}">
         </div>
         <div class="form-group">
-            <label for="data_evento">Data</label>
-            <input id="data_evento" type="datetime-local" class="form-control" name="data_evento" required value="{{ evento.get_data_evento_input }}">
+            <label for="data_evento">Data</label>                
+            <input id="data_evento" type="datetime-local" class="form-control" name="data_evento" required {% if date is None %} value="{{ evento.get_data_evento_input }}" {% else %} value="{{ date }}" {% endif %}" >
         </div>
-        <input type="submit" value="Salvar">
+        <div class="btn-group" role="group" aria-label="Opções">
+            <button type="submit" class="btn btn-primary btn-sm">Salvar</button>
+            <a href="/" class="btn btn-danger btn-sm">Cancelar</a>
+        </div>
     </form>
-
-    <a href="/">
-            <button type="button" name="btnVoltar">Volta</button>
-    </a>
 </div>
 {% endblock %}
 
