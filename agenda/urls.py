@@ -27,5 +27,6 @@ urlpatterns = [
     path('agenda/evento/update/<int:id_evento>', views.evento_update, name='evento_update'),
     path('agenda/evento/delete/<int:id_evento>', views.evento_delete, name='evento_delete'),
     path('accounts/', include('django.contrib.auth.urls')),
+    path('user_create', views.user_create, name='user_create'),
     path('', RedirectView.as_view(url='agenda/')),
 ]

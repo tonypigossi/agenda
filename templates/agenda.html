@@ -1,8 +1,6 @@
 {% extends 'model-page.html' %}
 {% block content %}
-
     <div class="container-fluid">
-
         <h2 class="text-center">Agendamentos</h2>
         <br>
         <div class="row">
@@ -21,10 +19,9 @@
                    <th scope="col">Opções</th>
                  </tr>
                 </thead>
-                <tbody>
                  {% for evento in eventos %}
-                   <tr {% if evento.get_data_evento_atrasado %} class="p-3 mb-2 bg-danger text-white" {% endif %}>
-                   <!-- <th>{{ evento.id }}</th> -->
+                 <tbody>
+                 <tr style="border-bottom: solid {{ evento.cor }}; border-right: solid {{ evento.cor }}; " >
                    <td>{{ evento.titulo }}</td>
                    <td>{{ evento.descricao }}</td>
                    <td>{{ evento.local_evento }} </td>
@@ -36,11 +33,11 @@
                        </div>
                    </td>
                  </tr>
-                 {% endfor %}
+
                 </tbody>
+                {% endfor %}
                 </table>
             </div>
         </div>
     </div>
-
 {% endblock %}

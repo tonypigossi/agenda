@@ -4,9 +4,17 @@
 <div class="container col-md-6 float-left">
     <form method="POST">
         {% csrf_token %}
-        <div class="form-group">
-            <label for="titulo_evento">Título</label>
-            <input id="titulo_evento" type="text" class="form-control" name="titulo_evento" placeholder="Título" value="{{ evento.titulo }}" required>
+        <div class="row">
+            <div class="col">
+                <div class="form-group">
+                    <label for="titulo_evento">Título</label>
+                    <input id="titulo_evento" type="text" class="form-control" name="titulo_evento" placeholder="Título" value="{{ evento.titulo }}" required>
+                </div>
+            </div>
+            <div class="col col-lg-4">
+                <label for="favcolor">Atribuía uma cor a evento:</label>
+                <input type="color" id="favcolor" name="cor_evento" {% if evento.cor %} value="{{ evento.cor }}" {% else %} value="#3788d8" {% endif %}">
+            </div>
         </div>
         <div class="form-group">
             <label for="descricao_evento">Descrição</label>
@@ -17,7 +25,7 @@
             <input id="localEvento_evento" type="text" class="form-control" name="local_evento" placeholder="Local do evento" value="{{ evento.local_evento }}">
         </div>
         <div class="form-group">
-            <label for="data_evento">Data</label>                
+            <label for="data_evento">Data</label>
             <input id="data_evento" type="datetime-local" class="form-control" name="data_evento" required {% if date is None %} value="{{ evento.get_data_evento_input }}" {% else %} value="{{ date }}" {% endif %}" >
         </div>
         <div class="btn-group" role="group" aria-label="Opções">
@@ -28,13 +36,9 @@
 </div>
 {% endblock %}
 
-
-
-<!--
-
-<h1>Evento</h1>
-    <form action="" method="POST">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="Salvar">
-    </form> -->
+<div class="row">
+    <div class="col">
+    </div>
+    <div class="col">
+    </div>
+</div>

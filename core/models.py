@@ -18,6 +18,7 @@ class Evento(models.Model):
     data_evento = models.DateTimeField(verbose_name='Data do eventos')
     data_create = models.DateTimeField(auto_now=True,
                                        verbose_name='Data da criação')
+    cor = models.CharField(max_length=7, default='#3788d8')
     usuario = models.ForeignKey(User, on_delete=models.CASCADE)
 
     class Meta:

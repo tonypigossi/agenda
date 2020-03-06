@@ -1,41 +1,44 @@
+{% load static %}
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
-    <head>
-        <meta charset="utf-8">
-        <title>Agenda</title>
-    </head>
-    <body>
-        {% if form.errors %}
+<html lang="pt-br">
+  <head>
+      {% include 'model-header.html' %}
+      <link rel="stylesheet" href="{% static 'bootstrap/css/signin.css' %}">
+  </head>
+  <body class="text-center">
+    <form class="form-signin" method="post" action="{% url 'login' %}">
+      {% csrf_token %}
+      {% if form.errors %}
+        <div class="alert alert-danger" role="alert">
             <p>Seu nome de usuário e senha não coincidem. Tente novamente</p>
-        {% endif %}
-
-        {% if next %}
-            {% if user.is_authenticated %}
+       {% endif %}
+       {% if next %}
+       {% if user.is_authenticated %}
             <p>Sua conta não tem acesso a esta página. Para continuar,
             faça o login com uma conta que tenha acesso.</p>
-            {% else %}
-            <p>Faça o login para ver esta página.</p>
-            {% endif %}
-        {% endif %}
+       {% else %}
+            <!-- <p>Faça o login para ver esta página.</p> -->
+       {% endif %}
+       {% endif %}
+        </div>
+      <img class="mb-4" src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
+      <h1 class="h3 mb-3 font-weight-normal">Agenda WEB</h1>
 
-        <form method="post" action="{% url 'login' %}">
-            {% csrf_token %}
-        <table>
-        <tr>
-            <td>{{ form.username.label_tag }}</td>
-            <td>{{ form.username }}</td>
-        </tr>
-        <tr>
-            <td>{{ form.password.label_tag }}</td>
-            <td>{{ form.password }}</td>
-        </tr>
-        </table>
+      <label for="inputEmail" class="sr-only">Usuário</label>
+      <input type="text" id="inputEmail" class="form-control" placeholder="Usuário" required autofocus name="username">
 
-        <input type="submit" value="login">
-        <input type="hidden" name="next" value="{{ next }}">
-        </form>
+      <label for="inputPassword" class="sr-only">Senha</label>
+      <input type="password" id="inputPassword" class="form-control" placeholder="Senha" required name="password">
 
-        {# Assumes you setup the password_reset view in your URLconf #}
-        <p><a href="{% url 'password_reset' %}">Esqueceu a senha?</a></p>
-    </body>
+      <div class="checkbox mb-3">
+          <label>
+              <input type="checkbox" value="remember-me">Lembrar senha</label>
+      </div>
+      <button class="btn btn-lg btn-primary btn-block" type="submit" style="margin-bottom: 5px;" >Acessar</button>
+      <input type="hidden" name="next" value="{{ next }}">
+      <a class="btn btn-lg btn-primary btn-block" href="{% url 'user_create' %}">Cadastrar</a>
+
+      <p class="mt-5 mb-3 text-muted">&copy; 2020</p>
+    </form>
+  </body>
 </html>

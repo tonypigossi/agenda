@@ -1,11 +1,16 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
+from django.contrib.auth import login, authenticate
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from datetime import datetime, timedelta
 from core import models
 from core import forms
 from django.http.response import Http404
+
+ICONCADASTRO = 'fas fa-plus'
+ICONATUALIZAR = 'fas fa-edit'
 
 
 def GetEventoLocal(request, titulo_evento):
@@ -21,10 +26,11 @@ def eventos_lista(request):
     eventos = models.Evento.objects.filter(usuario=usuario,
                                            ).order_by('-data_evento')
                                            # data_evento__gt=current_date
-
     data = {}
     data['eventos'] = eventos
+    data['labelCadAtualizar'] = 'Cadastrar novo evento'
     data['activeHome'] = 'active'
+    data['iconCad_Atualizar'] = ICONCADASTRO
     return render(request, 'agenda.html', data)
 
 
@@ -39,6 +45,7 @@ def __get_data_evento(request):
     evento.descricao = request.POST.get('descricao_evento')
     evento.local_evento = request.POST.get('local_evento')
     evento.data_evento = request.POST.get('data_evento')
+    evento.cor = request.POST.get('cor_evento')
     evento.usuario = request.user
     return evento
 
@@ -55,7 +62,9 @@ def evento_update(request, id_evento):
         else:
             data = {}
             data['evento'] = models.Evento.objects.get(id=id_evento)
-            data['activeCadEvento'] = 'active'
+            data['activeCadAtualizar'] = 'active'
+            data['labelCadAtualizar'] = 'Editando...'
+            data['iconCad_Atualizar'] = ICONATUALIZAR
             if request.user == data['evento'].usuario:
                 return render(request, 'evento.html', data)
             else:
@@ -68,18 +77,19 @@ def evento_update(request, id_evento):
 
 @login_required()
 def evento_create(request):
-    #
     try:
         if request.method == 'POST':
             __get_data_evento(request).save()
             return redirect('agenda')
         else:
             data = {}
-            data['activeCadEvento'] = 'active'
+            data['activeCadAtualizar'] = 'active'
+            data['labelCadAtualizar'] = 'Cadastrando...'
+            data['iconCad_Atualizar'] = ICONCADASTRO
 
             if request.GET.get('date', None):
                 data['date'] = request.GET.get('date')[:-6]
-                       
+
             return render(request, 'evento.html', data)
     except Exception as e:
         mensagem = str(e)
@@ -99,3 +109,18 @@ def evento_delete(request, id_evento):
         raise Http404
     else:
         return redirect('/')
+
+def user_create(request):
+    if request.method == "POST":
+        form_user = UserCreationForm(request.POST)
+        if form_user.is_valid():
+            form_user.save()
+            username = form_user.cleaned_data.get('username')
+            raw_password = form_user.cleaned_data.get('password1')
+            user = authenticate(username=username, password=raw_password)
+            login(request, user)
+            return redirect('agenda')
+
+    else:
+        form_user = UserCreationForm()
+    return render(request, 'registration/user_create.html', {'form_user': form_user})
