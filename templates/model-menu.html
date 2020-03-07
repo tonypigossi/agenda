@@ -5,12 +5,12 @@
     <li class="nav-item">
         <a class="nav-link {{ activeCadAtualizar }} {{ iconCad_Atualizar }}" href="{% url 'evento_create' %}"> {{ labelCadAtualizar }}</a>
     </li>
-    <li class="nav-item">
-        {% if user.is_authenticated %}
-            Usuário: {{ user.get_username }}
-            <a href="{% url 'logout'%}?next={{request.path}}"> Sair</a>
-        {% else %}
-             <a href="{% url 'login'%}?next={{request.path}}">Login</a>
-        {% endif %}
+    <li class="nav-item float-right ml-auto" style="margin-right: 10px;">
+        <a class="nav-link fas fa-user" >
+            {% if user.is_authenticated %}
+            <strong>Usuário:</strong> {{ user.get_username }}
+            {% endif %}
+        </a>
+        <a class="fas fa-sign-out-alt" href="{% url 'logout'%}?next={{request.path}}">Sair</a>
     </li>
 </ul>

@@ -1,18 +1,19 @@
 {% extends 'model-page.html' %}
 
 {% block content %}
-<div class="container col-md-6 float-left">
+<div class="container col-md-6 float-left" style="max-width: 550px;">
     <form method="POST">
         {% csrf_token %}
         <div class="row">
             <div class="col">
                 <div class="form-group">
                     <label for="titulo_evento">Título</label>
-                    <input id="titulo_evento" type="text" class="form-control" name="titulo_evento" placeholder="Título" value="{{ evento.titulo }}" required>
+                    <input autofocus id="titulo_evento" type="text" class="form-control" name="titulo_evento" placeholder="Título" value="{{ evento.titulo }}" required>
                 </div>
             </div>
             <div class="col col-lg-4">
                 <label for="favcolor">Atribuía uma cor a evento:</label>
+                <br>
                 <input type="color" id="favcolor" name="cor_evento" {% if evento.cor %} value="{{ evento.cor }}" {% else %} value="#3788d8" {% endif %}">
             </div>
         </div>
@@ -35,10 +36,3 @@
     </form>
 </div>
 {% endblock %}
-
-<div class="row">
-    <div class="col">
-    </div>
-    <div class="col">
-    </div>
-</div>
