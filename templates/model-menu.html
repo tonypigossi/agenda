@@ -5,12 +5,17 @@
     <li class="nav-item">
         <a class="nav-link {{ activeCadAtualizar }} {{ iconCad_Atualizar }}" href="{% url 'evento_create' %}"> {{ labelCadAtualizar }}</a>
     </li>
-    <li class="nav-item float-right ml-auto" style="margin-right: 10px;">
-        <a class="nav-link fas fa-user" >
+    <li class="nav-item dropdown loat-right ml-auto">
+        <a class="nav-link dropdown-toggle nav-link fas fa-user" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             {% if user.is_authenticated %}
-            <strong>Usuário:</strong> {{ user.get_username }}
+            <strong>Olá:</strong> {{ user.get_username }}
             {% endif %}
         </a>
-        <a class="fas fa-sign-out-alt" href="{% url 'logout'%}?next={{request.path}}">Sair</a>
-    </li>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="{% url 'password_change' %}">Alterar senha</a>
+            <!-- <a class="dropdown-item" href="#">Outra ação</a> -->
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item fas fa-sign-out-alt" href="{% url 'logout'%}?next={{request.path}}">Sair</a>
+        </div>
+      </li>
 </ul>

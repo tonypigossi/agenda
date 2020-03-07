@@ -3,7 +3,7 @@
 <html lang="pt-br">
   <head>
       {% include 'model-header.html' %}
-      <link rel="stylesheet" href="{% static 'bootstrap/css/signin.css' %}">     
+      <link rel="stylesheet" href="{% static 'bootstrap/css/signin.css' %}">
   </head>
   <body class="text-center">
     <form class="form-signin" method="post" action="{% url 'login' %}">
@@ -36,13 +36,12 @@
           </label>
       </div>
       <button class="btn btn-lg btn-primary btn-block" type="submit" style="margin-bottom: 5px;" >Entrar</button>
+      
       <input type="hidden" name="next" value="{{ next }}">
       <a href="{% url 'user_create' %}" class="btn btn-outline-primary" data-toggle="tooltip" data-placement="top" title="Clique para cadastrar um novo usuário">
           Cadastrar
       </a>
     </form>
-
     {% include 'model-footer.html' %}
-
   </body>
 </html>

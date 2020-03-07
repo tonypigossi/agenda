@@ -1,7 +1,7 @@
 {% extends 'model-page.html' %}
 
 {% block content %}
-<div class="container col-md-6 float-left" style="max-width: 550px;">
+<div class="container col-md-6 float-left border-right" style="max-width: 550px;">
     <form method="POST">
         {% csrf_token %}
         <div class="row">
@@ -12,7 +12,7 @@
                 </div>
             </div>
             <div class="col col-lg-4">
-                <label for="favcolor">Atribuía uma cor a evento:</label>
+                <label for="favcolor">Atribuía uma cor:</label>
                 <br>
                 <input type="color" id="favcolor" name="cor_evento" {% if evento.cor %} value="{{ evento.cor }}" {% else %} value="#3788d8" {% endif %}">
             </div>
