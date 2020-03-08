@@ -27,7 +27,7 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = ['localhosto', 'upagenda.herokuapp.com']
+ALLOWED_HOSTS = ['127.0.0.1', 'upagenda.herokuapp.com']
 
 
 # Application definition
