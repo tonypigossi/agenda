@@ -24,7 +24,7 @@ def eventos_lista(request):
     usuario = request.user
     current_date = datetime.now() - timedelta(hours=1)
     eventos = models.Evento.objects.filter(usuario=usuario,
-                                           ).order_by('-data_evento')
+                                           ).order_by('data_evento')
                                            # data_evento__gt=current_date
     data = {}
     data['eventos'] = eventos
